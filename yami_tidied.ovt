@@ -1,0 +1,93 @@
+@OBSThemeMeta {
+  name: 'Tidied';
+  id: 'com.obsproject.Yami.Tidied';
+  extends: 'com.obsproject.Yami';
+  author: 'jimpalompa';
+  dark: 'true';
+}
+
+/* -----------------------------------------------------------------------------
+  Custom theme variables
+----------------------------------------------------------------------------- */
+
+@OBSThemeVars {
+  --font_larger: calc(1.25pt * var(--font_base_value));
+  --scenes_frame_inset_x: calc(var(--padding_container) - 1px); /* Reduced by 1px to keep outer edges aligned */
+  --scenes_grid_item_height: calc(var(--input_height_base) + 6); /* 2px border + 2 x 2px margin (Normal/Comfortable density) */
+  --scenes_grid_item_margin_x: calc(var(--spacing_small) + 1px); /* Half of the Controls side-by-side gap */
+  --controls_split_margin: calc(var(--spacing_small) + 2px); /* Button margin + 2px virtualCamLayout spacing */
+}
+
+/* -----------------------------------------------------------------------------
+  Preview (OBSBasic.ui)
+----------------------------------------------------------------------------- */
+
+/* Hide the scaling controls bar (zoom, percentage, scaling mode, horizontal scrollbar) and the vertical scrollbar */
+OBSBasic #previewXContainer,
+OBSBasic #previewYScrollBar {
+  max-width: 0;
+  max-height: 0;
+  border: none;
+}
+
+/* -----------------------------------------------------------------------------
+  Studio Mode (OBSBasic_StudioMode.cpp)
+----------------------------------------------------------------------------- */
+
+/* Hide the transitions panel (no name, so this also matches Preview and Program; OBS resets the Program width itself) */
+OBSBasic #canvasEditor > .QWidget {
+  max-width: 0;
+}
+
+/* Unhide the preview (also used outside Studio Mode) */
+OBSBasic #canvasEditor > #previewContainer {
+  max-width: 16777215px;
+}
+
+/* Preview / Program titles: smaller margin-bottom and font than Yami */
+OBSBasic #canvasEditor > .QWidget QLabel.label-preview-title {
+  margin-bottom: 2px;
+  font-size: var(--font_larger);
+}
+
+/* -----------------------------------------------------------------------------
+  Dock Scenes (OBSBasic.ui)
+----------------------------------------------------------------------------- */
+
+/* Inset the scene list like Controls (top and sides only, since scenesFrame also holds the toolbar) */
+OBSBasic #scenesDock #scenesFrame {
+  padding: var(--padding_container) var(--scenes_frame_inset_x) 0;
+}
+
+/* Grid mode: size scene buttons like the Controls dock buttons */
+OBSBasic #scenesDock .list-grid SceneTree {
+  qproperty-gridItemHeight: var(--scenes_grid_item_height);
+}
+
+OBSBasic #scenesDock .list-grid SceneTree::item {
+  margin: var(--spacing_base) var(--scenes_grid_item_margin_x);
+}
+
+/* -----------------------------------------------------------------------------
+  Dock Controls (OBSBasicControls.ui)
+----------------------------------------------------------------------------- */
+
+/* Match the stream/broadcast gap to the virtual camera/gear gap (virtualCamLayout has 2px layout spacing, the stream row has none) */
+OBSBasicControls #controlsFrame QPushButton#broadcastButton {
+  margin-left: var(--controls_split_margin);
+}
+
+/* Hide virtual camera and settings buttons (collapses their rows) */
+OBSBasicControls #controlsFrame QPushButton#virtualCamButton,
+OBSBasicControls #controlsFrame QPushButton#virtualCamConfigButton,
+OBSBasicControls #controlsFrame QPushButton#settingsButton {
+  height: 0;
+  max-height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* -----------------------------------------------------------------------------
+  The end
+----------------------------------------------------------------------------- */

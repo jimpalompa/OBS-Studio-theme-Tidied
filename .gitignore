@@ -1,0 +1,4 @@
+# macOS / iCloud
+.DS_Store
+*.icloud
+._*
